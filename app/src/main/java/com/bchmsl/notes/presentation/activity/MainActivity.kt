@@ -1,9 +1,8 @@
-package com.bchmsl.notes
+package com.bchmsl.notes.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.bchmsl.notes.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

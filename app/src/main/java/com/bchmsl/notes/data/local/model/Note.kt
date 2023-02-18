@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class Note(
+data class Note(
     @PrimaryKey(autoGenerate = false)
     val date: Int,
     val title: String,

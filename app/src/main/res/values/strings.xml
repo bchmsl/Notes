@@ -12,4 +12,8 @@
     <string name="lets_get_to_know_each_other">Let\'s get to know\neach other.</string>
     <string name="whats_your_name">What\'s your name?</string>
     <string name="done">Done</string>
+    <string name="title">Title</string>
+    <string name="type_here">Type here…</string>
+    <string name="discard">Discard</string>
+    <string name="category">Category</string>
 </resources>

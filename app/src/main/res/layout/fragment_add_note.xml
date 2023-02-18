@@ -5,7 +5,94 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:padding="20dp"
     tools:context=".presentation.add_note.AddNoteFragment">
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/alata"
+        android:gravity="center"
+        android:hint="@string/title"
+        android:lines="1"
+        android:cursorVisible="false"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textColorHint="@color/light_grey"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Note Title" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etBody"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/alata"
+        android:gravity="top"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/type_here"
+        android:textColor="@color/white"
+        android:textColorHint="@color/light_grey"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/etCategory"
+        app:layout_constraintTop_toBottomOf="@id/etTitle"
+        tools:text="@tools:sample/lorem/random" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/category"
+        android:textColorHint="@color/light_grey"
+        tools:text="Home"
+        android:textColor="@color/white"
+        android:paddingHorizontal="20dp"
+        android:fontFamily="@font/alata"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/btnDone"
+
+        android:id="@+id/etCategory"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDone"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/alata"
+        android:gravity="center"
+        android:text="@string/done"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:backgroundTint="@color/black"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnDiscard"
+        app:layout_constraintHorizontal_weight="5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDiscard"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="5dp"
+        android:backgroundTint="@color/black"
+        android:contentDescription="@string/discard"
+        android:enabled="false"
+        android:foreground="@drawable/ic_delete"
+        android:foregroundGravity="center"
+        android:foregroundTint="@android:color/holo_red_light"
+        android:textAllCaps="false"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/btnDone"
+        app:strokeColor="@android:color/holo_red_light"
+        app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,8 +8,9 @@ import com.bchmsl.notes.domain.repository.UsernameRepository
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-class UsernameRepositoryImpl @Inject constructor(private val dataStore: DataStore<Preferences>) :
-    UsernameRepository {
+class UsernameRepositoryImpl @Inject constructor(
+    private val dataStore: DataStore<Preferences>
+) : UsernameRepository {
 
     override suspend fun getUsername(): String? {
         return dataStore.data.first()[DatastoreKeys.USERNAME_PREF_KEY]

@@ -2,14 +2,13 @@ package com.bchmsl.notes.presentation.welcome
 
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bchmsl.notes.common.extensions.async
 import com.bchmsl.notes.databinding.FragmentWelcomeBinding
 import com.bchmsl.notes.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 
 @AndroidEntryPoint
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>(FragmentWelcomeBinding::inflate) {
@@ -20,7 +19,13 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>(FragmentWelcomeBind
     }
 
     private fun goToHome() {
-        findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment(username))
+        async(Main) {
+            findNavController().navigate(
+                WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment(
+                    username
+                )
+            )
+        }
     }
 
     private fun listeners() {
@@ -41,16 +46,15 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>(FragmentWelcomeBind
 
     private fun checkIfFirstOpen() {
         vm.getUsername()
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-            vm.usernameState.collect {user->
-                withContext(Dispatchers.Main) {
-                    if (user == null) {
-                        checkUsername()
-                    } else {
-                        username = user
-                        goToHome()
-                    }
+        async(IO) {
+            vm.usernameState.collect { user ->
+                if (user == null) {
+                    checkUsername()
+                } else {
+                    username = user
+                    goToHome()
                 }
+
             }
         }
     }

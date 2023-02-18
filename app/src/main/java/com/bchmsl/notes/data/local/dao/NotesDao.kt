@@ -22,7 +22,10 @@ interface NotesDao {
 
     @Transaction
     @Query("SELECT * FROM category WHERE categoryName = :categoryName")
-    suspend fun getCategoryWithNotes(categoryName: String): List<CategoryWithNotes>
+    suspend fun getCategoryWithNotes(categoryName: String): CategoryWithNotes
+
+    @Query("SELECT * FROM note WHERE note.date = :date")
+    suspend fun getNote(date:Int): Note
 
     @Transaction
     @Query("DELETE FROM note WHERE category = :categoryName")

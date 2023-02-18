@@ -38,6 +38,8 @@
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:lines="1"
+            android:maxLines="1"
             android:backgroundTint="@color/dark_grey"
             android:drawableStart="@drawable/ic_search"
             android:drawableTint="@color/light_grey"

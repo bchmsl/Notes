@@ -1,38 +1,63 @@
 package com.bchmsl.notes.presentation.home
 
-import android.util.Log
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bchmsl.notes.common.extensions.async
+import com.bchmsl.notes.data.local.model.Category
 import com.bchmsl.notes.databinding.FragmentHomeBinding
 import com.bchmsl.notes.presentation.base.BaseFragment
 import com.bchmsl.notes.presentation.home.adapter.NotesPageAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers.Main
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private val notesPageAdapter by lazy { NotesPageAdapter(this) }
+    private lateinit var notesPageAdapter: NotesPageAdapter
     private val vm: HomeViewModel by viewModels()
     private val args: HomeFragmentArgs by navArgs()
     override fun start() {
-        setupViewPager()
-        getUsername()
+        async(Main) {
+            observe()
+            getUsername()
+            listeners()
+        }
     }
 
-    private fun setupViewPager() {
+    private fun observe() {
+        async(Main) {
+            vm.categoriesState.collect {
+                setupViewPager(it)
+            }
+        }
+    }
+
+    private fun listeners() {
+        binding.fabAdd.setOnClickListener {
+            goToAddNote()
+        }
+    }
+
+    private fun goToAddNote() {
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddNoteFragment())
+    }
+
+    private fun setupViewPager(categories: List<Category>) {
+        notesPageAdapter = NotesPageAdapter(this@HomeFragment, categories)
         binding.viewPager.adapter = notesPageAdapter
+        setupTabLayout(categories)
+    }
+
+    private fun setupTabLayout(categories: List<Category>) {
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = "OBJECT ${(position + 1)}"
+            tab.text = categories[position].categoryName
         }.attach()
     }
 
     private fun getUsername() {
-        binding.tvWelcome.text = "Welcome back,\n${args.username}!"
+        "Welcome back,\n${args.username}!".also { binding.tvWelcome.text = it }
     }
 }
 
